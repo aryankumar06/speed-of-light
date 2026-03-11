@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String     @id @default(cuid())
+  email         String     @unique
+  password      String
+  name          String
+  instituteName String?
+  instituteLogo String?
+  plan          String     @default("free")
+  papersUsed    Int        @default(0)
+  createdAt     DateTime   @default(now())
+  papers        Paper[]
+  questions     Question[]
+  refreshTokens RefreshToken[]
+  resetTokens   PasswordResetToken[]
+}
+
+model Paper {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title         String
+  subject       String
+  className     String
+  board         String
+  totalMarks    Int
+  duration      Int
+  difficulty    Json
+  questionTypes Json
+  questions     Json
+  answerKey     Json
+  pdfUrl        String?
+  variants      Int      @default(1)
+  status        String   @default("draft")
+  createdAt     DateTime @default(now())
+}
+
+model Question {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  text        String
+  type        String
+  options     Json?
+  answer      String
+  marks       Int
+  difficulty  String
+  subject     String
+  topic       String
+  bloomsLevel String
+  usageCount  Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+}
