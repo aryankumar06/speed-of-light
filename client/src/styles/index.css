@@ -8,3 +8,5 @@ body { @apply font-body text-slate-800 bg-warm; }
 .btn { @apply rounded-lg px-4 py-2 font-medium transition; }
 .btn-primary { @apply rounded-lg px-4 py-2 font-medium transition bg-navy text-white hover:opacity-90; }
 .btn-ghost { @apply rounded-lg px-4 py-2 font-medium transition border border-slate-300 hover:bg-slate-50; }
+.btn-primary { @apply btn bg-navy text-white hover:opacity-90; }
+.btn-ghost { @apply btn border border-slate-300 hover:bg-slate-50; }
