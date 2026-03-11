@@ -26,3 +26,14 @@ AI-powered exam paper generator for teachers and coaching institutes.
 ## Notes
 - Claude generation automatically falls back to deterministic mock generation if API key is missing in local dev.
 - Local storage is used for uploads/PDFs unless AWS credentials are configured.
+
+## Vercel deployment
+
+This repository is a monorepo. For Vercel static frontend deployment:
+
+- Root directory: repository root
+- Install command: `npm install --include=dev`
+- Build command: `npm run build -w client`
+- Output directory: `client/dist`
+
+A root `vercel.json` is included with these defaults.
